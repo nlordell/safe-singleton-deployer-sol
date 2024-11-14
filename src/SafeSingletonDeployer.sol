@@ -11,11 +11,11 @@ library SafeSingletonDeployer {
     address constant SAFE_SINGLETON_FACTORY = 0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7;
     VmSafe private constant VM = VmSafe(address(uint160(uint256(keccak256("hevm cheat code")))));
 
-    function computeAddress(bytes memory creationCode, bytes32 salt) public pure returns (address) {
+    function computeAddress(bytes memory creationCode, bytes32 salt) internal pure returns (address) {
         return computeAddress(creationCode, "", salt);
     }
 
-    function computeAddress(bytes memory creationCode, bytes memory args, bytes32 salt) public pure returns (address) {
+    function computeAddress(bytes memory creationCode, bytes memory args, bytes32 salt) internal pure returns (address) {
         return VM.computeCreate2Address({
             salt: salt,
             initCodeHash: _hashInitCode(creationCode, args),
